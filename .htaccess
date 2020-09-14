@@ -1,0 +1,27 @@
+IndexIgnore *
+
+RewriteEngine On
+
+RewriteRule includes - [F]
+#ErrorDocument 404 https://www.wesecure.africa/404.html
+
+RewriteRule ^index$ index.php [L]
+RewriteRule ^bookings$ bay_booking.php [L]
+RewriteRule ^login$ login.php [L]
+RewriteRule ^logout$ logout.php [L]
+RewriteRule ^register$ register.php [L]
+RewriteRule ^dash$ dashboard.php [L]
+RewriteRule ^bays$ bays.php [L]
+RewriteRule ^my-cars$ my_cars.php [L]
+RewriteRule ^my-wallet$ my_wallet.php [L]
+RewriteRule ^return-paynow$ paynow_return.php [L]
+RewriteRule ^register-user$ moab/php/create_user.php [L]
+RewriteRule ^login-user$ moab/php/login_user.php [L]
+RewriteRule ^logout$ logout.php [L]
+RewriteRule ^student-dash$ dash.php [L]
+RewriteRule ^student-room$ student_room.php [L]
+RewriteRule ^student-issues$ issues.php [L]
+RewriteRule ^view-issue-([0-9]+)$ issue.php?issue_id=$1 [L]
+RewriteRule ^hostel-rooms-([0-9]+)$ rooms.php?hostel_id=$1 [L]
+
+
