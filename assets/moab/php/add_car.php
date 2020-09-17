@@ -40,7 +40,7 @@ if($method=='POST'){
 
    $user_id = $_SESSION["user"]->user_id;
 
-  $total_cars = json_decode($carObj->withConditions("*", "user_id='"+$user_id+"'"));
+  $total_cars = json_decode($carObj->withConditions("*", "user_id='".$user_id."'"));
 
   if(count($total_cars)<=4){
       $assoc = array(

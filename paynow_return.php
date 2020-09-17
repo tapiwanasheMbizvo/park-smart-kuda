@@ -34,14 +34,26 @@ $paynow = new Paynow\Payments\Paynow(
 $pollUrl = $_SESSION["pollUrl"];
 
 
-var_dump($pollUrl);
+//var_dump($pollUrl);
 
 $status = $paynow->pollTransaction($pollUrl);
 
-var_dump($status);
 
-die;
+//var_dump($status);
 
+//echo "status is ".$status->status();
+
+//die;
+//"data":"Paynow\Core\StatusResponse":private]=>
+//  array(6) {
+//    ["reference"]=>
+//    string(25) "Paying For PArking top Up"
+//    ["paynowreference"]=>
+//    string(8) "10101589"
+//    ["amount"]=>
+//    string(6) "100.00"
+//    ["status"]=>
+//    string(4) "Paid"
 ?>
 <?php  require_once  "header.php";?>
 
@@ -49,7 +61,7 @@ die;
       <div class="content">
 
           <div class="container-fluid">
-              <h4>Manage Bays</h4>
+              <h4>Transaction Report</h4>
               <div class="row">
 
                   <div class="col-sm-7">
@@ -65,7 +77,30 @@ die;
                           <hr/>
 
                           <div id="paynow_return_response">
+                              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                  <strong>Processing Done!</strong> Your new Balance is $<?=$_SESSION["balance"]?>.
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <table class="table">
 
+                                  <tr>
+                                      <td>Transaction Amount</td>
+                                      <td>$<?php echo  $status->amount();?></td>
+                                  </tr>
+
+                                  <tr>
+                                      <td>Transaction Reference</td>
+                                      <td><?php echo  $status->paynowReference();?></td>
+                                  </tr>
+
+                                  <tr>
+                                      <td>Transaction Status</td>
+                                      <td><?php echo  $status->status();?></td>
+                                  </tr>
+
+                              </table>
                           </div>
 
 

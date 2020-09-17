@@ -20,7 +20,7 @@ $streets=0;
       <div class="content">
 
           <div class="container-fluid">
-              <h4>Manage Bays</h4>
+              <h4>Manage Wallet</h4>
               <div class="row">
 
                   <div class="col-sm-7">
@@ -31,11 +31,17 @@ $streets=0;
 
                           </div>
                           <div class="card-body">
+                              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                  <strong>Good Day</strong> Your Wallet Balance is $<?=$_SESSION["balance"]?>.
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
                               <form class="form" id="top_up" name="top_up">
 
                                   <div class="form-group">
                                       <label for="pwd">Top Up Amount</label>
-                                      <input type="number" class="form-control" id="amount" min="100" max="1000" step="10" name="amount"placeholder="AXX-8585">
+                                      <input type="number" class="form-control" id="amount" min="10" max="1000" step="any" name="amount"placeholder="250">
                                   </div>
 
                                   <button type="submit" class="btn btn-primary">Top Up Wallet</button>
@@ -45,11 +51,20 @@ $streets=0;
 
                           <div id="paynow_init_response">
 
+                              <div id="paynow_init_spinner" style="display: none" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                  <strong>Initiating...</strong> Please Wait While we initiate your transaction...
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+
                           </div>
 
 
                       </div>
                   </div>
+
+
 
 
               </div>
@@ -68,7 +83,8 @@ $streets=0;
     $(document).on('submit', "#top_up", function (e) {
 
         e.preventDefault();
-
+        $("#paynow_init_spinner").css("display", "block");
+        $("#top_up").css("display", "none");
 
         let amount = $('#amount').val();
 
@@ -99,8 +115,10 @@ $streets=0;
 
 
                const new_html = "<a href='"+data.link+"'>" +
-                   "<button class='btn btn-sm btn-success'>Got to Paynow </button>" +
-                   "</a>"
+                   "<button class='btn btn-sm btn-success'>Got to Paynow and Pay $ "+data.amount+" </button>" +
+                   "</a>";
+
+                $("#paynow_init_spinner").css("display", "none");
 
                 $("#paynow_init_response").append(new_html);
 

@@ -6,7 +6,7 @@
  * Time: 11:09
  */
 
-
+//error_reporting(E_ERROR | E_PARSE);
 if(!isset($_SESSION)){
 
     session_start();
@@ -24,7 +24,8 @@ require_once "theBomb.php";
 require_once  "User.php";
 $theBomb = new theBomb();
 $txnObj = new User($theBomb, "transactions", "txn_id");
-
+$walletObj = new User($theBomb, "wallet", "wallet_id");
+$user_id = $_SESSION["user"]->user_id;
 $paynow = new Paynow\Payments\Paynow(
     4593,
     'fd4f95c7-ee88-4814-97b0-1d82961b915e',
@@ -38,7 +39,7 @@ if($method=='POST'){
 
 
     $amount = $_POST['amount'];
-    $payment = $paynow->createPayment('Paying For PArking top Up', 'tapiwambizvo@gmail.com');
+    $payment = $paynow->createPayment('Paying For PArking top Up', 'tmgreyhat@gmail.com');
     $payment->add('Transaction Amount', $amount);
 
    // Save the response from paynow in a variable
@@ -53,8 +54,72 @@ if($method=='POST'){
         // Or if you prefer more control, get the link to redirect the user to, then use it as you see fit
         $link = $response->redirectUrl();
 
+        //check if wallet exists
+// $this->isAvailable("email", $this->getEmail()) ? $this->create($assoc): $this->response["error"]="Email Already Exists";
+
+
+        if(!$walletObj->isAvailable("user_id", $user_id)){
+
+
+            $wallets = json_decode($walletObj->withConditions("*", "user_id='".$user_id."'"), true);
+
+            $wallet = array_pop($wallets);
+
+
+            $wallet_id = $wallet['wallet_id'];
+            $balance = $wallet['balance']+$amount;
+
+            $wallet_data = array(
+
+                "balance"=>$balance
+
+            );
+
+            $walletObj->update($wallet_data, $wallet_id);
+
+            //record the transactions
+
+
+            $crdr= "CR";
+            $txn_data = array(
+
+                "wallet_id"=>$wallet_id,
+                "amount"=>$amount,
+                "crdr"=>$crdr,
+                "pollUrl"=>$response->pollUrl()
+            );
+
+            $txnObj->create($txn_data);
+
+        }else{
+
+            //lets create the wallet
+
+            $wallet_data = array(
+
+                "user_id"=>$user_id,
+                "balance"=>$amount
+
+            );
+
+
+          $wallet_id =   $theBomb->saveData("wallet",$wallet_data);
+            $crdr= "CR";
+          $txn_data = array(
+
+              "wallet_id"=>$wallet_id,
+              "amount"=>$amount,
+              "crdr"=>$crdr,
+              "pollUrl"=>$response->pollUrl()
+
+          );
+
+          $txnObj->create($txn_data);
+        }
         // Get the poll url (used to check the status of a transaction). You might want to save this in your DB
         $pollUrl = $response->pollUrl();
+
+        $_SESSION["balance"]= $balance;
     }
 
     $txnObj->response['response']= $response;
@@ -67,6 +132,15 @@ if($method=='POST'){
 
     echo json_encode($txnObj->response);
 
+
+
+
+
+}
+
+
+
+function saveTxnData(){
 
 
 

@@ -144,6 +144,24 @@ class User extends DBModel {
                $this->response["success"]= true;
                 $_SESSION["user"]= $user;
                 $_SESSION["is_logged_in"]= true;
+
+                $user_id = $user->user_id;
+
+
+               $wallets = json_decode($this->withJoins("*","inner join wallet on wallet.user_id=users.user_id where users.user_id = '".$user_id."' "));
+               $wallet = array_pop($wallets);
+
+
+
+
+               if(is_null($wallet)){
+
+                   $_SESSION["balance"]= 0;
+               }else {
+                   $balance = $wallet->balance;
+                   $_SESSION["balance"] = $balance;
+               }
+
            }else{
 
                $this->response["error"]= "User Auth Failed";

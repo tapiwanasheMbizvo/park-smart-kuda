@@ -38,7 +38,7 @@ if($method=='GET'){
 
   //  echo "user is is ".$user_id;
 
-    echo  $carBoj->withConditions("*", "user_id='"+$user_id+"'");
+    echo  $carBoj->withConditions("*", "user_id='".$user_id."'");
 
 
 

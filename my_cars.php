@@ -20,7 +20,7 @@ $streets=0;
       <div class="content">
 
           <div class="container-fluid">
-              <h4>Manage Bays</h4>
+              <h4>Manage My Cars</h4>
               <div class="row">
 
                   <div class="col-sm-7">
