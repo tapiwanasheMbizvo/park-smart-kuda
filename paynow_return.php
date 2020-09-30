@@ -19,7 +19,13 @@ if(!isset($_SESSION)){
 }
 require_once  "assets/moab/Paynow/autoloader.php";
 
+require_once "assets/moab/php/User.php";
+require_once "assets/moab/php/theBomb.php";
 
+$theBomb = new theBomb();
+$txnObj = new User($theBomb, "transactions", "txn_id");
+$walletObj = new User($theBomb, "wallet", "wallet_id");
+$user_id = $_SESSION["user"]->user_id;
 $paynow = new Paynow\Payments\Paynow(
     4593,
     'fd4f95c7-ee88-4814-97b0-1d82961b915e',
@@ -36,12 +42,15 @@ $pollUrl = $_SESSION["pollUrl"];
 
 //var_dump($pollUrl);
 
-$status = $paynow->pollTransaction($pollUrl);
+try {
+    $status = $paynow->pollTransaction($pollUrl);
+} catch (\Paynow\Http\ConnectionException $e) {
+} catch (\Paynow\Payments\HashMismatchException $e) {
+}
 
 
-//var_dump($status);
 
-//echo "status is ".$status->status();
+
 
 //die;
 //"data":"Paynow\Core\StatusResponse":private]=>
@@ -54,6 +63,80 @@ $status = $paynow->pollTransaction($pollUrl);
 //    string(6) "100.00"
 //    ["status"]=>
 //    string(4) "Paid"
+
+$balance = $_SESSION['balance'];
+$response =$_SESSION['response'];
+$amount = $status->amount();
+
+
+
+
+if($status->status()=="paid"){
+
+    $_SESSION['balance']= $_SESSION['balance']+$amount;
+
+    if(!$walletObj->isAvailable("user_id", $user_id)){
+
+
+        $wallets = json_decode($walletObj->withConditions("*", "user_id='".$user_id."'"), true);
+
+        $wallet = array_pop($wallets);
+
+
+        $wallet_id = $wallet['wallet_id'];
+        $balance = $wallet['balance']+$amount;
+
+        $wallet_data = array(
+
+            "balance"=>$balance
+
+        );
+
+        $walletObj->update($wallet_data, $wallet_id);
+
+        //record the transactions
+
+
+        $crdr= "CR";
+        $txn_data = array(
+
+            "wallet_id"=>$wallet_id,
+            "amount"=>$amount,
+            "crdr"=>$crdr,
+            "pollUrl"=>$pollUrl
+        );
+
+        $txnObj->create($txn_data);
+
+    }else{
+
+        //lets create the wallet
+
+        $wallet_data = array(
+
+            "user_id"=>$user_id,
+            "balance"=>$amount
+
+        );
+
+
+        $wallet_id =   $theBomb->saveData("wallet",$wallet_data);
+        $crdr= "CR";
+        $txn_data = array(
+
+            "wallet_id"=>$wallet_id,
+            "amount"=>$amount,
+            "crdr"=>$crdr,
+            "pollUrl"=>$response->pollUrl()
+
+        );
+
+        $txnObj->create($txn_data);
+    }
+
+
+}
+
 ?>
 <?php  require_once  "header.php";?>
 
@@ -156,7 +239,7 @@ $status = $paynow->pollTransaction($pollUrl);
 
                const new_html = "<a href='"+data.link+"'>" +
                    "<button class='btn btn-sm btn-success'>Got to Paynow </button>" +
-                   "</a>"
+                   "</a>";
 
                 $("#paynow_init_response").append(new_html);
                

@@ -128,16 +128,27 @@ if(!$_SESSION["is_logged_in"]){
 
                     <li class="nav-item ">
                         <a class="nav-link" href="bookings">
-                            <i class="material-icons">aspect_ratio</i>
+                            <i class="material-icons">commute</i>
+                            <p>Book A Bay</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="parking">
+                            <i class="material-icons">local_parking</i>
                             <p>Parking</p>
                         </a>
                     </li>
+
+
                     <li class="nav-item ">
                         <a class="nav-link" href="my-cars">
                             <i class="material-icons">commute</i>
                             <p>My Cars</p>
                         </a>
                     </li>
+
+
                     <li class="nav-item ">
                         <a class="nav-link" href="my-wallet">
                             <i class="material-icons">commute</i>

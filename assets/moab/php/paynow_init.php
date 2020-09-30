@@ -58,68 +58,10 @@ if($method=='POST'){
 // $this->isAvailable("email", $this->getEmail()) ? $this->create($assoc): $this->response["error"]="Email Already Exists";
 
 
-        if(!$walletObj->isAvailable("user_id", $user_id)){
-
-
-            $wallets = json_decode($walletObj->withConditions("*", "user_id='".$user_id."'"), true);
-
-            $wallet = array_pop($wallets);
-
-
-            $wallet_id = $wallet['wallet_id'];
-            $balance = $wallet['balance']+$amount;
-
-            $wallet_data = array(
-
-                "balance"=>$balance
-
-            );
-
-            $walletObj->update($wallet_data, $wallet_id);
-
-            //record the transactions
-
-
-            $crdr= "CR";
-            $txn_data = array(
-
-                "wallet_id"=>$wallet_id,
-                "amount"=>$amount,
-                "crdr"=>$crdr,
-                "pollUrl"=>$response->pollUrl()
-            );
-
-            $txnObj->create($txn_data);
-
-        }else{
-
-            //lets create the wallet
-
-            $wallet_data = array(
-
-                "user_id"=>$user_id,
-                "balance"=>$amount
-
-            );
-
-
-          $wallet_id =   $theBomb->saveData("wallet",$wallet_data);
-            $crdr= "CR";
-          $txn_data = array(
-
-              "wallet_id"=>$wallet_id,
-              "amount"=>$amount,
-              "crdr"=>$crdr,
-              "pollUrl"=>$response->pollUrl()
-
-          );
-
-          $txnObj->create($txn_data);
-        }
         // Get the poll url (used to check the status of a transaction). You might want to save this in your DB
         $pollUrl = $response->pollUrl();
 
-        $_SESSION["balance"]= $balance;
+       // $_SESSION["balance"]= $balance;
     }
 
     $txnObj->response['response']= $response;
@@ -129,6 +71,7 @@ if($method=='POST'){
     $txnObj->response['amount']=$amount;
 
     $_SESSION["pollUrl"]= $pollUrl;
+    $_SESSION["response"]= $response;
 
     echo json_encode($txnObj->response);
 
