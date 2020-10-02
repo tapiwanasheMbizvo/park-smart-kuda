@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="615e54b7-6d99-46ba-9f94-0a3540cd7f79" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/parking.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parking_copy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/moab/php/paynow_init.php" beforeDir="false" afterPath="$PROJECT_DIR$/assets/moab/php/paynow_init.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bay_booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/bay_booking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paynow_return.php" beforeDir="false" afterPath="$PROJECT_DIR$/paynow_return.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dash.php" beforeDir="false" afterPath="$PROJECT_DIR$/dash.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -54,15 +47,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name=".htaccess" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.htaccess">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="parking.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parking.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -84,17 +68,26 @@
       <file leaf-file-name="paynow_init.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/moab/php/paynow_init.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
+            <state relative-caret-position="1156">
               <caret line="73" column="36" selection-start-line="73" selection-start-column="36" selection-end-line="73" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="paynow_return.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="paynow_return.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/paynow_return.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+            <state relative-caret-position="748">
+              <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dash.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dash.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="549">
+              <caret line="144" column="32" selection-start-line="144" selection-start-column="32" selection-end-line="144" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -129,8 +122,8 @@
       <file leaf-file-name="my_wallet.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/my_wallet.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="861">
-              <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
+            <state relative-caret-position="1292">
+              <caret line="76" selection-start-line="76" selection-end-line="76" />
             </state>
           </provider>
         </entry>
@@ -155,7 +148,6 @@
         <option value="$PROJECT_DIR$/my_wallet.php" />
         <option value="$PROJECT_DIR$/assets/moab/php/get_cars.php" />
         <option value="$PROJECT_DIR$/assets/moab/php/add_car.php" />
-        <option value="$PROJECT_DIR$/dash.php" />
         <option value="$PROJECT_DIR$/assets/moab/php/User.php" />
         <option value="$PROJECT_DIR$/.htaccess" />
         <option value="$PROJECT_DIR$/bay_booking.php" />
@@ -165,6 +157,7 @@
         <option value="$PROJECT_DIR$/login.php" />
         <option value="$PROJECT_DIR$/assets/moab/php/paynow_init.php" />
         <option value="$PROJECT_DIR$/paynow_return.php" />
+        <option value="$PROJECT_DIR$/dash.php" />
       </list>
     </option>
   </component>
@@ -200,7 +193,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -230,12 +222,13 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
-    <property name="database.console.LAST_STATE" value="true" />
+    <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -274,12 +267,13 @@
       <workItem from="1600591748687" duration="1274000" />
       <workItem from="1600670198572" duration="1033000" />
       <workItem from="1600721197397" duration="2839000" />
-      <workItem from="1601369894308" duration="4257000" />
+      <workItem from="1601369894308" duration="4723000" />
+      <workItem from="1601609250946" duration="421000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28882000" />
+    <option name="totallyTimeSpent" value="29769000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
@@ -288,24 +282,24 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info id="npm" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.23706897" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.23706897" />
       <window_info id="Gulp" order="2" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Database Console" order="7" visible="true" weight="0.3297414" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09808102" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09914712" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" visible="true" weight="0.13272922" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Database Console" order="7" weight="0.3297414" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3297414" />
     </layout>
   </component>
@@ -544,13 +538,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dash.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="18" column="66" lean-forward="true" selection-start-line="18" selection-start-column="66" selection-end-line="18" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/moab/php/login_user.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -630,14 +617,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/my_wallet.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="861">
-          <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
+        <state relative-caret-position="1292">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/moab/php/paynow_init.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
+        <state relative-caret-position="1156">
           <caret line="73" column="36" selection-start-line="73" selection-start-column="36" selection-end-line="73" selection-end-column="36" />
         </state>
       </provider>
@@ -665,8 +652,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/paynow_return.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+        <state relative-caret-position="748">
+          <caret line="44" column="5" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dash.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="144" column="32" selection-start-line="144" selection-start-column="32" selection-end-line="144" selection-end-column="32" />
         </state>
       </provider>
     </entry>
