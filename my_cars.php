@@ -137,6 +137,12 @@ $streets=0;
             license_number:license_number
         };
 
+        swal({
+            title: "Loading",
+            text: "Please wait while we do a few checks",
+            icon: "warning",
+        });
+
         $.ajax({
 
             type:'POST',
@@ -148,9 +154,16 @@ $streets=0;
                 if(data.success){
                     console.log("YAY WE DONE IT");
 
+                    swal({
+                        title: "Success",
+                        text: "Car Has Been Added",
+                        icon: "success",
+                    });
+
                     const new_car = "<tr>" +
                         "<td>"+model_name+"</td>" +
                         "<td>"+license_number+"</td>" +
+                        "<td><button class='btn btn-danger btn-sm'>Delete</button></td>"+
                         "</tr>";
 
                     $("#table_cars").append(new_car);

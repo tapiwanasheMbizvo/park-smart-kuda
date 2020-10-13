@@ -26,7 +26,7 @@
                     </div>
                     <div class="card-body">
 
-                        <form class="form" id="top_up" name="top_up">
+                        <form class="form" id="book_bay" name="book_bay">
 
                             <div class="form-group">
                                 <label for="pwd">Select Car</label>
@@ -43,6 +43,22 @@
 
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="pwd">Time In</label>
+
+                                <input type="datetime-local" class="form-control" id="time_in" name="time_in"/>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pwd">Time Out</label>
+
+                                <input type="datetime-local" class="form-control" id="time_out" name="time_out"/>
+
+                            </div>
+
+
 
                             <button type="submit" class="btn btn-primary">Book Bay</button>
                         </form>
@@ -71,6 +87,74 @@
 <?php require_once "bottom.php"; ?>
 <script>
 
+    $(document).on('submit', "#book_bay", function (e) {
+
+        e.preventDefault();
+        let car_id = $('#car_list').val();
+        let bay_id = $('#list_bays').val();
+
+        let time_in = $('#time_in').val();
+        let time_out = $('#time_out').val();
+        //alert("hey BITCHES");
+
+        var new_in = new Date(time_in);
+        var new_out = new Date(time_out);
+
+
+        var diffrence = new_out-new_in;
+
+         var msec = diffrence;
+
+        var hh = Math.floor(msec / 1000 / 60 / 60);
+        msec -= hh * 1000 * 60 * 60;
+        var mm = Math.floor(msec / 1000 / 60);
+        msec -= mm * 1000 * 60;
+        var ss = Math.floor(msec / 1000);
+        msec -= ss * 1000;
+
+
+        //console.log("Difference is "+diffrence);
+        console.log("Difference in real time its  "+hh+" hours ,"+mm+" minutes and "+ss+" seconds" );
+
+       // console.log(new_out.getTime()>new_in.getTime());
+
+   if(Date.parse(time_out)>Date.parse(time_in)){
+
+        //yay we are good
+
+       if(hh<8){
+
+           //lets make a booking now
+
+           bookBay(bay_id, car_id, time_in, time_out);
+
+       }else{
+
+           swal({
+               title: "Failed!! ",
+               text: "You can only book for a max of 8 hours",
+               icon: "error",
+           });
+       }
+
+    }else{
+
+       swal({
+           title: "Failed!! ",
+           text: "Time in is later than time out, Please edit and try again",
+           icon: "error",
+       });
+
+    }
+
+
+
+
+        //bookBay(bay_id, car_id, time_in, time_out);
+    });
+
+
+
     loadCars();
 
     loadStreets();
@@ -89,7 +173,7 @@
 
 
 
-                    const car_option = "<option value=' "+car.vehicle_id+" '>"+car.model_name+"</option>";
+                    const car_option = "<option value=' "+car.vehicle_id+" '>"+car.model_name +"  "+car.license_number +" </option>";
 
                     $("#car_list").append(car_option);
 
@@ -102,6 +186,64 @@
 
     }
 
+
+    function bookBay(bay_id, car_id, time_in, time_out) {
+
+        //alert(bay_id+car_id+time_in+time_out);
+
+        const  data= {
+
+            bay_id:bay_id,
+            car_id:car_id,
+            time_in:time_in,
+            time_out:time_out,
+        };
+
+        $.ajax({
+
+            type:'POST',
+            url:'assets/moab/php/book_bay.php',
+            data:data,
+            dataType:'JSON',
+            success:function (data) {
+
+                if(data.success){
+
+                  //  window.location.href="dash";
+                    swal({
+                        title: "Success",
+                        text: "Bay has Been Booked!",
+                        icon: "success",
+                    });
+
+                }else{
+
+                    // alert(data.error);
+
+                    swal({
+                        title: "Failed!! ",
+                        text: data.error,
+                        icon: "error",
+                    });
+                }
+            },
+            error:function (txt) {
+
+                swal({
+                    title: "Failed!! ",
+                    text: txt,
+                    icon: "error",
+                });
+            }
+
+
+
+        });
+
+
+
+
+    }
     function loadStreets(){
         $("#table_streets").innerHTML=" ";
         console.log("LOADING STRRETS")
@@ -130,5 +272,8 @@
 
     }
 
+   // alert("hey BITCHES  2");
 
 </script>
+
+

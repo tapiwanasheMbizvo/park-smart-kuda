@@ -115,18 +115,22 @@
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active" id="profile">
-                            <h3 class="text-warning">Change Password</h3>
-                            <form>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h3 class="text-warning">Change Password</h3>
+                                    <form id="change_password" name="change_password">
 
-                                <label for="password">Old Password</label>
-                                <input type="password" class="form-control" name="old_password"/>
-                                <label for="password">New Password</label>
-                                <input type="password" class="form-control" name="new_password"/>
-                                <label for="password">Confirm Password</label>
-                                <input type="password" class="form-control" name="confirm_password"/>
-                                <button class="btn btn-success">Change Password</button>
+                                        <label for="password">Old Password</label>
+                                        <input type="password" class="form-control" name="old_password" ="old_password"/>
+                                        <label for="password">New Password</label>
+                                        <input type="password" class="form-control" name="new_password" id="new_password"/>
+                                        <label for="password">Confirm Password</label>
+                                        <input type="password" class="form-control" name="confirm_password" id="confirm_password"/>
+                                        <button  type="submit" class="btn btn-success">Change Password</button>
 
-                            </form>
+                                    </form>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="tab-pane" id="messages">
@@ -136,12 +140,11 @@
                                         <tr>
                                             <th>Transaction Date</th>
                                             <th>Transaction Amount</th>
-                                            <th>Transaction Status</th>
                                             <th>Transaction Ref</th>
 
                                         </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="table_txns">
 
 
                                 </tbody>
@@ -224,3 +227,55 @@
 
     </div>
 </div>
+
+
+<?php require_once "bottom.php";?>
+<script>
+
+
+    $(document).on('submit', "#change_password", function (e) {
+
+
+        e.preventDefault();
+
+
+        alert("hey Btches");
+
+    }
+
+
+
+    loadTransactions();
+    function loadTransactions(){
+        $("#table_txns").innerHTML=" ";
+        console.log("LOADING TXNS");
+        $.ajax({
+            url: "assets/moab/php/get_txns.php",
+            type: 'GET',
+            success: function(res) {
+                console.log(res);
+
+
+
+               res.forEach(function (txn) {
+
+
+
+                    const txn_row = "<tr>" +
+                        "<td>"+txn.date_txn+"</td>" +
+                        "<td>"+txn.amount+"</td>"+
+                        "<td>"+txn.pollUrl+"</td>"+
+
+                        "</tr>";
+
+                    $("#table_txns").append(txn_row);
+
+
+                })
+                console.log(res.data);
+
+            }
+        });
+
+    }
+</script>

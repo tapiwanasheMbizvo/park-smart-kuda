@@ -54,6 +54,9 @@ if(!$_SESSION["is_logged_in"]){
     <link href="assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="assets/demo/demo.css" rel="stylesheet" />
+
+    <script src="jsQR.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
 </head>
 
 <body class="">
@@ -64,7 +67,7 @@ if(!$_SESSION["is_logged_in"]){
 
           Tip 2: you can also add an image using data-image tag
       -->
-        <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <div class="logo"><a href="dash" class="simple-text logo-normal">
                 E -Park
             </a></div>
 
