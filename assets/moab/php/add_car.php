@@ -51,11 +51,9 @@ if($method=='POST'){
 
   $total_cars = json_decode($carObj->withConditions("*", "user_id='".$user_id."'"));
 
-
-
-
-
-
+    $file_name = 'park_qr_file'.md5($license_number).'.png';
+    $upload_dr = "qrCodes/";
+    $path = $upload_dr.$file_name;
 
   if(count($total_cars)<=4){
       $assoc = array(
@@ -75,13 +73,11 @@ if($method=='POST'){
 
       $carObj->isAvailable("license_number", $license_number)? $carObj->create($assoc): $carObj->response["error"]= "license Plate Already Exists";
 
-      $file_name = 'park_qr_file'.md5($license_number).'.png';
-      $upload_dr = "qrCodes/";
-      $path = $upload_dr.$file_name;
+
 
       QRcode::png($license_number, $path);
 
-      sendQrCode($user_email, $path);
+      sendQrCode($user_email, $path,QR_ECLEVEL_L, 20, 4);
 
 
   }else{

@@ -91,7 +91,7 @@ if(!$_SESSION["is_logged_in"]){
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="./typography.html">
+                        <a class="nav-link" href="view-users">
                             <i class="material-icons">commute</i>
                             <p>Users</p>
                         </a>

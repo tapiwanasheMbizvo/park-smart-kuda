@@ -31,6 +31,7 @@
                         <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
                         <canvas id="canvas" hidden></canvas>
                         <div id="output" hidden>
+
                             <div id="outputMessage">No QR code detected.</div>
                             <div hidden><b>Data:</b> <span id="outputData"></span></div>
                         </div>
@@ -112,8 +113,11 @@
 
                 if (!outputData.parentElement.hidden){
 
+                    checkIfCarIsBookedForSpot(code.data);
                     canvasElement.hidden= true;
                     canvas.stop();
+
+
 
                     //get the licence plate and process shit
                 }
@@ -123,5 +127,71 @@
             }
         }
         requestAnimationFrame(tick);
+    }
+
+
+
+
+
+
+</script>
+
+<script>
+
+    function checkIfCarIsBookedForSpot(licence_number) {
+
+        const  data= {
+
+            licence_number:licence_number,
+
+
+        };
+
+        $.ajax({
+
+            type:'POST',
+            url:'assets/moab/php/verify_booking.php',
+            data:data,
+            dataType:'JSON',
+            success:function (data) {
+
+                if(data.success){
+
+                    swal({
+                        title: "Success",
+                        text: "Car"+licence_number+"  is booked",
+                        icon: "success",
+                    });
+                }else{
+
+                    // alert(data.error);
+
+                    swal({
+                        title: "Failed!! ",
+                        text: data.error,
+                        icon: "error",
+                    });
+                }
+            },
+            error:function (txt) {
+
+                swal({
+                    title: "Failed!! ",
+                    text: txt,
+                    icon: "error",
+                });
+            }
+
+
+
+        });
+
+
+
+
+
+
+
+
     }
 </script>

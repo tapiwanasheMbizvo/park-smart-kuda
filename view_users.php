@@ -20,80 +20,37 @@ $streets=0;
       <div class="content">
 
           <div class="container-fluid">
-              <h4>Manage Bays</h4>
+              <h4>Manage Users</h4>
               <div class="row">
 
-                  <div class="col-sm-5">
-                      <div class="card">
-                          <div class="card-header card-header-primary">
-                                <h4 class="card-title">Streets</h4>
-                              <p class="card-category">View And Manage Streets</p>
 
-                          </div>
-                          <div class="card-body">
-                              <form class="form-inline" id="add_street" name="add_street">
-                                  <div class="form-group">
-                                      <label for="email">Street Name</label>
-                                      <input type="text" class="form-control" id="street" name="street">
-                                  </div>
-                                  <div class="form-group">
-                                      <label for="pwd">No.of Bays</label>
-                                      <input type="number" class="form-control" min="5" max="10" id="slots" name="slots">
-                                  </div>
-
-                                  <button type="submit" class="btn btn-primary">Add Street</button>
-                              </form>
-                          </div>
-                          <hr/>
-
-                          <div class="table-responsive">
-
-                              <table class="table">
-                                  <thead>
-                                  <tr>
-
-                                        <th>Name</th>
-                                        <th>Total Bays</th>
-
-                                  </tr>
-                                  </thead>
-                                  <tbody id="table_streets">
-
-
-                                  </tbody>
-                              </table>
-                          </div>
-                      </div>
-                  </div>
 
                   <div class="col-sm-7">
 
 
                       <div class="card">
                           <div class="card-header card-header-primary">
-                              <h4 class="card-title">Parking Bays</h4>
-                              <p class="card-category">View and Manage Parking Bays </p>
+                              <h4 class="card-title">Users</h4>
+                              <p class="card-category">View and Manage Parking Users </p>
                           </div>
                           <div class="card-body">
 
-                              <span>Select Street To View Bays </span>
-                              <select class="form-control" id="list_bays" name="list_bays" onchange="streetBays()">
-
-                              </select>
                               <div class="table-responsive">
                                   <table class="table">
                                       <thead class=" text-primary">
 
                                       <tr>
-                                            <th>Parking Bay Code</th>
-                                            <th>Status</th>
+                                            <th>User Name</th>
+                                            <th>Email</th>
+                                          <th>Options</th>
                                       </tr>
 
                                       </thead>
 
-                                      <tbody id="table_bays">
+                                      <tbody id="table_users">
 
                                       </tbody>
+
                                   </table>
                               </div>
                           </div>
@@ -115,32 +72,34 @@ $streets=0;
 
 
 
-    loadStreets();
-    function loadStreets(){
-        $("#table_streets").innerHTML=" ";
+    loadUsers();
+    function loadUsers(){
+        $("#table_users").innerHTML=" ";
         console.log("LOADING STRRETS")
         $.ajax({
-            url: "assets/moab/php/get_streets.php",
+            url: "assets/moab/php/get_users.php",
             type: 'GET',
             success: function(res) {
                // console.log(res);
 
                 const results = res;
 
-                results.forEach(function (street) {
-
+                results.forEach(function (user) {
+               // <i class='material-icons'>aspect_ratio</i>
                  //   console.log(street)
 
-                    const street_row = "<tr>" +
-                        "<td>"+street.street_name+"</td>" +
-                        "<td>"+street.slots+"</td>"+
+                    const user_row = "<tr>" +
+                        "<td>"+user.first_name+" "+user.last_name+"</td>" +
+                        "<td>"+user.email+"</td>"+
+                        "<td>" +
+                        "<button class='btn-sm btn-primary'><i class='material-icons'>edit</i></button>" +
+                        "<button class='btn-sm btn-danger'><i class='material-icons'>preview</i></button>" +
+                        "</td>"+
                         "</tr>";
 
-                    $("#table_streets").append(street_row);
+                    $("#table_users").append(user_row);
 
-                    const list_item = "<option value='"+street.street_id+"'>"+street.street_name+"</option>";
 
-                    $("#list_bays").append(list_item);
                 })
                 //console.log(res.data);
 

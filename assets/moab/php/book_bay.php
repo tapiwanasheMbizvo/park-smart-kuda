@@ -31,6 +31,7 @@ if($method=='POST'){
     $theBomb = new theBomb();
     $bookingObj = new User($theBomb, "bookings", "booking_id");
     $baysObj = new User($theBomb, "bays", "bay_id");
+    $walletObj = new User($theBomb, "wallet", "wallet_id");
    // $streetObj = new User($theBomb, "street", "booking_id");
 
     //$userObj->setEmail($_POST['email']);
@@ -74,7 +75,49 @@ if($method=='POST'){
 
     );
     $baysObj->update($newData, $bay->bay_id);
-    echo  $bookingObj->create($assoc);
+
+
+
+    //deuct money from account
+
+
+    $wallets = json_decode($walletObj->withJoins("*","inner join users on wallet.user_id=users.user_id where users.user_id = '".$user_id."' "));
+    $wallet = array_pop($wallets);
+
+
+
+
+    if(is_null($wallet)){
+
+        $_SESSION["balance"]= 0;
+        //there is no wallet user should make a deposit first
+
+
+        $bookingObj->response["error"]= "Please Do A Deposit first ";
+
+        echo  json_encode($bookingObj->response); die;
+    }else {
+        $balance = $wallet->balance;
+
+        $config = parse_ini_file("config.ini");
+        $parking_cost = $config["parking_cost"];
+
+        if($balance< $parking_cost){
+            $bookingObj->response["error"]= "Insufficient Funds ";
+            echo  json_encode($bookingObj->response); die;
+        }else {
+            $balance = $balance - $parking_cost;
+
+            $_SESSION["balance"] = $balance;
+
+            echo  $bookingObj->create($assoc);
+        }
+
+
+    }
+
+
+
 
 
 
