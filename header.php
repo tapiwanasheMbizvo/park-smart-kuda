@@ -97,9 +97,9 @@ if(!$_SESSION["is_logged_in"]){
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="./icons.html">
+                        <a class="nav-link" href="view-bookings">
                             <i class="material-icons">library_books</i>
-                            <p>History</p>
+                            <p>Bookings</p>
                         </a>
                     </li>
 

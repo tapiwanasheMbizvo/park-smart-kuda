@@ -91,12 +91,6 @@
                             <span class="nav-tabs-title">My Dash Board:</span>
                             <ul class="nav nav-tabs" data-tabs="tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#profile" data-toggle="tab">
-                                        <i class="material-icons">settings</i> Settings
-                                        <div class="ripple-container"></div>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="#messages" data-toggle="tab">
                                         <i class="material-icons">payment</i> Transaction History
                                         <div class="ripple-container"></div>
@@ -114,25 +108,7 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
-                        <div class="tab-pane active" id="profile">
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <h3 class="text-warning">Change Password</h3>
-                                    <form id="change_password" name="change_password">
 
-                                        <label for="password">Old Password</label>
-                                        <input type="password" class="form-control" name="old_password" ="old_password"/>
-                                        <label for="password">New Password</label>
-                                        <input type="password" class="form-control" name="new_password" id="new_password"/>
-                                        <label for="password">Confirm Password</label>
-                                        <input type="password" class="form-control" name="confirm_password" id="confirm_password"/>
-                                        <button  type="submit" class="btn btn-success">Change Password</button>
-
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
                         <div class="tab-pane" id="messages">
                             <table class="table">
 
@@ -152,71 +128,19 @@
                         </div>
                         <div class="tab-pane" id="settings">
                             <table class="table">
-                                <tbody>
+
+                                <thead>
                                 <tr>
-                                    <td>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" value="">
-                                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                    <td class="td-actions text-right">
-                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                            <i class="material-icons">close</i>
-                                        </button>
-                                    </td>
+                                    <th>Booking Date</th>
+                                    <th>Vehicle </th>
+                                    <th>Time IN</th>
+                                    <th>Time Out</th>
+
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" value="" checked>
-                                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                    </td>
-                                    <td class="td-actions text-right">
-                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                            <i class="material-icons">close</i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" value="" checked>
-                                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                    <td class="td-actions text-right">
-                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                            <i class="material-icons">close</i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                </thead>
+                                <tbody id="table_my_bookings">
+
+
                                 </tbody>
                             </table>
                         </div>
@@ -232,7 +156,9 @@
 <?php require_once "bottom.php";?>
 <script>
 
-
+    loadTransactions();
+    loadBookins();
+/*
     $(document).on('submit', "#change_password", function (e) {
 
 
@@ -241,11 +167,12 @@
 
         alert("hey Btches");
 
-    }
+    };
+*/
 
 
 
-    loadTransactions();
+
     function loadTransactions(){
         $("#table_txns").innerHTML=" ";
         console.log("LOADING TXNS");
@@ -263,12 +190,46 @@
 
                     const txn_row = "<tr>" +
                         "<td>"+txn.date_txn+"</td>" +
-                        "<td>"+txn.amount+"</td>"+
+                        "<td>$"+txn.amount+"</td>"+
                         "<td>"+txn.pollUrl+"</td>"+
 
                         "</tr>";
 
                     $("#table_txns").append(txn_row);
+
+
+                })
+                console.log(res.data);
+
+            }
+        });
+
+    }
+
+    function loadBookins(){
+        $("#table_my_bookings").innerHTML=" ";
+        console.log("LOADING Bookings");
+        $.ajax({
+            url: "assets/moab/php/my_bookings.php",
+            type: 'GET',
+            success: function(res) {
+                console.log(res);
+
+
+
+               res.forEach(function (booking) {
+
+
+
+                    const booing_row = "<tr>" +
+                        "<td>"+booking.booked_on+"</td>" +
+                        "<td>"+booking.model_name+" "+booking.license_number+"</td>" +
+                        "<td>"+booking.start_date+"</td>"+
+                        "<td>"+booking.end_date+"</td>"+
+
+                        "</tr>";
+
+                    $("#table_my_bookings").append(booing_row);
 
 
                 })
