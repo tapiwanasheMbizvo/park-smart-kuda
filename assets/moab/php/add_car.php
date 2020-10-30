@@ -77,7 +77,7 @@ if($method=='POST'){
 
       QRcode::png($license_number, $path);
 
-      sendQrCode($user_email, $path,QR_ECLEVEL_L, 20, 4);
+      sendQrCode($user_email, $license_number,$path,QR_ECLEVEL_L, 20, 4);
 
 
   }else{
@@ -90,7 +90,7 @@ if($method=='POST'){
     echo  json_encode($carObj->response);
 }
 
-function sendQrCode ($user_email, $qr_code_path){
+function sendQrCode ($user_email, $license_number, $qr_code_path){
 
     $config = parse_ini_file("config.ini");
 
@@ -123,7 +123,7 @@ function sendQrCode ($user_email, $qr_code_path){
         // Content
         $mail->isHTML(true);                                  // Set email format to HTML
         $mail->Subject = 'QR Code for You Recently Added Car';
-        $mail->Body    = 'Good day find attached QR code to use to scan when parking';
+        $mail->Body    = 'Good day find attached QR code to use to scan when parking for license number '+$license_number;
         //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
         $mail->send();
