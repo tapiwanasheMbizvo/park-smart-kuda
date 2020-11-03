@@ -83,68 +83,83 @@ $streets=0;
     $(document).on('submit', "#top_up", function (e) {
 
         e.preventDefault();
-        $("#paynow_init_spinner").css("display", "block");
-        $("#top_up").css("display", "none");
-
         let amount = $('#amount').val();
 
 
+        if(amount<100 || amount>999){
 
-        const  data= {
+            swal({
+                title: "Failed!! ",
+                text: "Amount should be between 100 - 999",
+                icon: "error",
+            });
 
-            amount:amount
-        };
-
-        $.ajax({
-
-            type:'POST',
-            url:'assets/moab/php/paynow_init.php',
-            data:data,
-            dataType:'JSON',
-            success:function (data) {
-
-            console.log(data);
-
-            if(data.response.success){
-
-               /* swal({
-                    title: "Good!! ",
-                    text: "Well zvaita oo link"+data.link,
-                    icon: "success",
-                });*/
+        }else{
 
 
-               const new_html = "<a href='"+data.link+"'>" +
-                   "<button class='btn btn-sm btn-success'>Got to Paynow and Pay $ "+data.amount+" </button>" +
-                   "</a>";
-
-                $("#paynow_init_spinner").css("display", "none");
-
-                $("#paynow_init_response").append(new_html);
-
-            }else{
-
-                swal({
-                    title: "Failed!! ",
-                    text: data.response.status,
-                    icon: "error",
-                });
-
-            }
-
-            },
-            error:function (txt) {
-
-                swal({
-                    title: "Failed!! ",
-                    text: txt,
-                    icon: "error",
-                });
-            }
+            $("#paynow_init_spinner").css("display", "block");
+            $("#top_up").css("display", "none");
 
 
+            const  data= {
 
-        });
+                amount:amount
+            };
+
+            $.ajax({
+
+                type:'POST',
+                url:'assets/moab/php/paynow_init.php',
+                data:data,
+                dataType:'JSON',
+                success:function (data) {
+
+                    console.log(data);
+
+                    if(data.response.success){
+
+                        /* swal({
+                             title: "Good!! ",
+                             text: "Well zvaita oo link"+data.link,
+                             icon: "success",
+                         });*/
+
+
+                        const new_html = "<a href='"+data.link+"'>" +
+                            "<button class='btn btn-sm btn-success'>Got to Paynow and Pay $ "+data.amount+" </button>" +
+                            "</a>";
+
+                        $("#paynow_init_spinner").css("display", "none");
+
+                        $("#paynow_init_response").append(new_html);
+
+                    }else{
+
+                        swal({
+                            title: "Failed!! ",
+                            text: data.response.status,
+                            icon: "error",
+                        });
+
+                    }
+
+                },
+                error:function (txt) {
+
+                    swal({
+                        title: "Failed!! ",
+                        text: txt,
+                        icon: "error",
+                    });
+                }
+
+
+
+            });
+
+        }
+
+
 
 
 

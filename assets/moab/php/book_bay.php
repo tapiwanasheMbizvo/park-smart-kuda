@@ -54,6 +54,7 @@ if($method=='POST'){
     $bay_id =$_POST['bay_id'];
     $time_in =$_POST['time_in'];
     $time_out =$_POST['time_out'];
+    $hours =$_POST['hours'];
 
     ///var_dump($_POST);
 
@@ -102,11 +103,25 @@ if($method=='POST'){
         $config = parse_ini_file("config.ini");
         $parking_cost = $config["parking_cost"];
 
+        $parking_cost = $parking_cost*$hours;
         if($balance< $parking_cost){
             $bookingObj->response["error"]= "Insufficient Funds ";
             echo  json_encode($bookingObj->response); die;
         }else {
             $balance = $balance - $parking_cost;
+
+            //update wallet
+
+            $newData = array(
+
+                "balance"=>$balance
+
+            );
+
+            //$walletObj->theHand->;
+            $theBomb->update("wallet", $newData, "user_id='".$user_id . "'");
+
+
 
             $_SESSION["balance"] = $balance;
 

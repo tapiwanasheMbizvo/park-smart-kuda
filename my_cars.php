@@ -104,7 +104,7 @@ $streets=0;
                     const car_row = "<tr>" +
                         "<td>"+car.model_name+"</td>" +
                         "<td>"+car.license_number+"</td>"+
-                        "<td><button class='btn btn-danger btn-sm'>Delete</button></td>"+
+                        "<td><button class='btn btn-danger btn-sm delbtn' data-id="+car.vehicle_id+">Delete</button></td>"+
                         "</tr>";
 
                     $("#table_cars").append(car_row);
@@ -120,7 +120,18 @@ $streets=0;
 
 
 
+$(document).on('click', '.delbtn', function (e) {
 
+    e.preventDefault();
+    let $this = $(this);
+
+    let card_id = ($this.attr("data-id"));
+
+
+   // alert("GOOD MORNING" +card_id);
+
+    deletecar(card_id);
+});
 
     $(document).on('submit', "#add_car", function (e) {
 
@@ -131,43 +142,109 @@ $streets=0;
         let model_name = $('#model_name').val();
 
 
+        if(model_name.length < 4 || model_name.length>20 || license_number<4 || license_number>20){
+            swal({
+                title: "Error",
+                text: "Model name or license number must be between 4-20 characters",
+                icon: "warning",
+            });
+
+
+        }else{
+
+            swal({
+                title: "Loading",
+                text: "Please wait while we do a few checks",
+                icon: "warning",
+            });
+
+            const  data= {
+
+                model_name:model_name,
+                license_number:license_number
+            };
+
+
+            $.ajax({
+
+                type:'POST',
+                url:'assets/moab/php/add_car.php',
+                data:data,
+                dataType:'JSON',
+                success:function (data) {
+
+                    if(data.success){
+                        console.log("YAY WE DONE IT");
+
+                        swal({
+                            title: "Success",
+                            text: "Car Has Been Added",
+                            icon: "success",
+                        });
+
+                        const new_car = "<tr>" +
+                            "<td>"+model_name+"</td>" +
+                            "<td>"+license_number+"</td>" +
+                            "<td><button class='btn btn-danger btn-sm'>Delete</button></td>"+
+                            "</tr>";
+
+                        $("#table_cars").append(new_car);
+                        //loadStreets();
+
+                    }else{
+
+                        // alert(data.error);
+
+                        swal({
+                            title: "Failed!! ",
+                            text: data.error,
+                            icon: "error",
+                        });
+                    }
+                },
+                error:function (txt) {
+
+                    swal({
+                        title: "Failed!! ",
+                        text: txt,
+                        icon: "error",
+                    });
+                }
+
+
+
+            });
+
+        }
+
+
+
+
+
+
+    })
+
+    function deletecar(id) {
+
         const  data= {
 
-            model_name:model_name,
-            license_number:license_number
+            id:id,
+
         };
-
-        swal({
-            title: "Loading",
-            text: "Please wait while we do a few checks",
-            icon: "warning",
-        });
-
         $.ajax({
 
             type:'POST',
-            url:'assets/moab/php/add_car.php',
+            url:'assets/moab/php/delete_car.php',
             data:data,
             dataType:'JSON',
             success:function (data) {
 
                 if(data.success){
-                    console.log("YAY WE DONE IT");
 
-                    swal({
-                        title: "Success",
-                        text: "Car Has Been Added",
-                        icon: "success",
-                    });
+                    //$("#table_cars").innerHTML=" ";
+                    $("#table_cars tr").remove();
 
-                    const new_car = "<tr>" +
-                        "<td>"+model_name+"</td>" +
-                        "<td>"+license_number+"</td>" +
-                        "<td><button class='btn btn-danger btn-sm'>Delete</button></td>"+
-                        "</tr>";
-
-                    $("#table_cars").append(new_car);
-                    //loadStreets();
+                    loadCars();
 
                 }else{
 
@@ -193,7 +270,5 @@ $streets=0;
 
         });
 
-
-
-    })
+    }
 </script>

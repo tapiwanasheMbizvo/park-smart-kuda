@@ -126,7 +126,7 @@
 
            //lets make a booking now
 
-           bookBay(bay_id, car_id, time_in, time_out);
+           bookBay(bay_id, car_id, time_in, time_out, hh);
 
        }else{
 
@@ -187,7 +187,7 @@
     }
 
 
-    function bookBay(bay_id, car_id, time_in, time_out) {
+    function bookBay(bay_id, car_id, time_in, time_out, hours) {
 
         //alert(bay_id+car_id+time_in+time_out);
 
@@ -197,6 +197,7 @@
             car_id:car_id,
             time_in:time_in,
             time_out:time_out,
+            hours:hours
         };
 
         $.ajax({
